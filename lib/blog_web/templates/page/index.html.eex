@@ -1,5 +1,12 @@
-<div class="container">
-  <h1 class="title"><%= gettext "Welcome to %{name}!", name: "Phoenix" %></h1>
-  <p>A productive web framework that<br/>does not compromise speed or maintainability.</p>
+<h1 class="title"><%= gettext "Welcome to the %{name} Todo App!", name: "Phoenix" %></h1>
+<div class="box">
+  <div class="list is-hoverable">
+    <a class="list-item" href="<%= Routes.task_path(@conn, :index) %>">
+      You can find a list of task.
+    </a>
+    <a class="list-item" href="<%= Routes.task_path(@conn, :new) %>">
+      To create a new task click.
+    </a>
+  </div>
 </div>
 
