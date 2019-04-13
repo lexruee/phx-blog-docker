@@ -1,5 +1,24 @@
-<h1>Edit Post</h1>
+<section class="box">
+  <h1 class="title">Edit Post</h1>
+  <%= render "form.html", Map.put(assigns, :action, Routes.post_path(@conn, :update, @post)) %>
+</section>
 
-<%= render "form.html", Map.put(assigns, :action, Routes.post_path(@conn, :update, @post)) %>
-
-<span><%= link "Back", to: Routes.post_path(@conn, :index) %></span>
+<section class="box">
+  <h2 class="title">Comments</h2>
+  <%= for comment <- @comments do %>
+    <article class="box">
+      <div class="media-content">
+        <div class="content">
+          <strong><%= comment.title %></strong>
+           <br/>
+           <%= comment.body %>
+        </div>
+        <div class="control is-pulled-right">
+          <%= link "Delete", to: Routes.post_comment_path(@conn, :delete, @post.id, comment), 
+                class: "button is-danger", method: :delete, data: [confirm: "Are you sure?"] %>
+        </div>
+        <br/>
+      </div>
+    </article>
+  <% end %>
+</section>

@@ -1,14 +1,26 @@
-<h2>Add your comment</h2>
+<h2 class="title">Add your comment</h2>
 
 <%= form_for @comment_changeset, Routes.post_comment_path(@conn, :create, @post), fn f -> %>
-  <%= label f, :title %>
-  <%= text_input f, :title %>
-  <%= error_tag f, :title %>
+  <%= if @comment_changeset.action do %>
+    <div class="notification alert alert-danger">
+      <p>Oops, something went wrong! Please check the errors below.</p>
+    </div>
+  <% end %>
 
-  <%= label f, :body %>
-  <%= textarea f, :body %>
-  <%= error_tag f, :body %>
-  <div>
-    <%= submit "Save" %>
+  <div class="field">
+    <%= label f, :title, class: "label" %>
+    <%= text_input f, :title, class: "input" %>
+    <%= error_tag f, :title %>
   </div>
+
+  <div class="field">
+    <%= label f, :body, class: "label" %>
+    <%= textarea f, :body, class: "textarea" %>
+    <%= error_tag f, :body %>
+  </div>
+
+  <div class="control is-pulled-right">
+    <%= submit "Save", class: "button is-success" %>
+  </div>
+  <br/>
 <% end %>

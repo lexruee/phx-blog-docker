@@ -30,15 +30,16 @@ defmodule BlogWeb.PostController do
   def show(conn, %{"id" => id}) do
     post = Content.get_post!(id)
     comments = Content.list_comments_for(post)
-    comment_changeset = Content.change_comment(%Comment{post_id: id})
+    comment_changeset = Content.change_comment(%Comment{})
     render(conn, "show.html", post: post, comments: comments, 
       comment_changeset: comment_changeset)
   end
 
   def edit(conn, %{"id" => id}) do
     post = Content.get_post!(id)
+    comments = Content.list_comments_for(post)
     changeset = Content.change_post(post)
-    render(conn, "edit.html", post: post, changeset: changeset)
+    render(conn, "edit.html", post: post, comments: comments, changeset: changeset)
   end
 
   def update(conn, %{"id" => id, "post" => post_params}) do

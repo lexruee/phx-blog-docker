@@ -1,23 +1,35 @@
-<h1><%= @post.title %></h1>
-<p>
-  <%= @post.body %>
-</p>
+<article class="box">
+  <h1 class="title"><%= @post.title %></h1>
+  <div class="content">
+    <%= @post.body %>
+  </div>
+  <div class="control is-pulled-right">
+    <span><%= link "Edit", to: Routes.post_path(@conn, :edit, @post), class: "button is-warning" %></span>
+    <span><%= link "Back", to: Routes.post_path(@conn, :index), class: "button is-link" %></span>
+  </div>
+  <br/>
+</article>
 
+<section class="box">
 <%= render BlogWeb.CommentView, "new.html", 
                                 conn: @conn, 
                                 post: @post, 
                                 comment_changeset: @comment_changeset %>
+</section>
 
-<h1>Comments</h1>
-<p>
+<section>
+  <h2 class="title">Comments</h2>
   <%= for comment <- @comments do %>
-    <h2> <%= comment.title %> </h2>
-    <p>
-      <%= comment.body %>
-    </p>
+    <article class="box">
+      <div class="media-content">
+        <div class="content">
+          <p>
+            <strong><%= comment.title %></strong>
+            <br/>
+            <%= comment.body %>
+          </p>
+        </div>
+      </div>
+    </article>
   <% end %>
-</p>
-
-<span><%= link "Edit", to: Routes.post_path(@conn, :edit, @post) %></span>
-<span><%= link "Back", to: Routes.post_path(@conn, :index) %></span>
-
+</section>
