@@ -3,6 +3,7 @@ defmodule BlogWeb.PostController do
 
   alias Blog.Content
   alias Blog.Content.Post
+  alias Blog.Content.Comment
 
   def index(conn, _params) do
     posts = Content.list_posts()
@@ -28,7 +29,10 @@ defmodule BlogWeb.PostController do
 
   def show(conn, %{"id" => id}) do
     post = Content.get_post!(id)
-    render(conn, "show.html", post: post)
+    comments = Content.list_comments_for(post)
+    comment_changeset = Content.change_comment(%Comment{post_id: id})
+    render(conn, "show.html", post: post, comments: comments, 
+      comment_changeset: comment_changeset)
   end
 
   def edit(conn, %{"id" => id}) do

@@ -3,7 +3,9 @@ defmodule Blog.Content do
   The Content context.
   """
 
+  import IEx
   import Ecto.Query, warn: false
+  import Ecto, only: [assoc: 2, build_assoc: 3]
   alias Blog.Repo
 
   alias Blog.Content.Post
@@ -118,6 +120,20 @@ defmodule Blog.Content do
   end
 
   @doc """
+  Returns the list of comments for a specific post.
+
+  ## Examples
+
+      iex> post = Content.get_post!(1)
+      iex> list_comments_for(post)
+      [%Comment{}, ...]
+
+  """
+  def list_comments_for(post) do
+    Repo.all assoc(post, :comments)
+  end
+
+  @doc """
   Gets a single comment.
 
   Raises `Ecto.NoResultsError` if the Comment does not exist.
@@ -145,10 +161,9 @@ defmodule Blog.Content do
       {:error, %Ecto.Changeset{}}
 
   """
-  def create_comment(attrs \\ %{}) do
-    %Comment{}
-    |> Comment.changeset(attrs)
-    |> Repo.insert()
+  def create_comment(post, attrs \\ %{}) do
+    build_assoc(post, :comments, body: attrs["body"], title: attrs["title"])
+    |> Repo.insert
   end
 
   @doc """
