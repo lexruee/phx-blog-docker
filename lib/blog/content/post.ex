@@ -5,6 +5,7 @@ defmodule Blog.Content.Post do
   schema "posts" do
     field :body, :string
     field :title, :string
+    has_many :comment, Blog.Content.Comment
 
     timestamps()
   end
